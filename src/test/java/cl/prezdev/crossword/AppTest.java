@@ -5,7 +5,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Placeholder test for the application.
+ *
+ * <p>Now that {@link cl.prezdev.crossword.service.config.impl.JsonReadConfigFileImplTest}
+ * verifies the configuration loading logic, this class simply ensures the
+ * testing framework is wired correctly.</p>
  */
 public class AppTest 
     extends TestCase
