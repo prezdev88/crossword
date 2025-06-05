@@ -12,14 +12,16 @@ import java.util.List;
 public class JsonReadConfigFileImpl implements ReadConfigFile {
     @Override
     public List<Word> loadWords(File file) throws FileNotFoundException {
-        InputStreamReader inputStreamReader = getInputStreamReader(file);
-        ConfigFile configFile = new Gson().fromJson(inputStreamReader, ConfigFile.class);
-
-        return new ConfigFileMapper().map(configFile);
+        try (FileInputStream inputStream = createFileInputStream(file);
+             InputStreamReader reader = new InputStreamReader(inputStream)) {
+            ConfigFile configFile = new Gson().fromJson(reader, ConfigFile.class);
+            return new ConfigFileMapper().map(configFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read config file", e);
+        }
     }
 
-    private InputStreamReader getInputStreamReader(File file) throws FileNotFoundException {
-        InputStream inputStream = new FileInputStream(file);
-        return new InputStreamReader(inputStream);
+    protected FileInputStream createFileInputStream(File file) throws FileNotFoundException {
+        return new FileInputStream(file);
     }
 }
