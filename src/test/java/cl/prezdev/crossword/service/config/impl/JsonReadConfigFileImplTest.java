@@ -33,6 +33,7 @@ public class JsonReadConfigFileImplTest {
     @Test
     public void loadWords_closesStreams() throws Exception {
         File temp = File.createTempFile("config", ".json");
+        temp.deleteOnExit();
         Files.write(temp.toPath(), "{\"words\":[\"hello\"]}".getBytes(StandardCharsets.UTF_8));
 
         TrackingJsonReadConfigFileImpl reader = new TrackingJsonReadConfigFileImpl();
